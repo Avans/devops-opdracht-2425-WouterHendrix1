@@ -10,7 +10,7 @@ const { db } = require("../services/database");
 
 /* GET users listing. */
 
-router.get('/', async function (req, res, next) {
+router.get('/', async function (req, res) {
 
   let users = await db.collection('users').find().toArray();
 
@@ -20,7 +20,7 @@ router.get('/', async function (req, res, next) {
 
 
 
-router.post('/', function (req, res, next) {
+router.post('/', function (req, res) {
 
   db.collection('users').insertOne(req.body)
     .then((user) => res.status(201).json({ "id": user.insertedId }))
