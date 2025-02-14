@@ -5,7 +5,7 @@ const uri = process.env.MONGO_URL;
 
 const client = new MongoClient(uri);
 
-const db = client.db(process.env.MONGO_DB);
+const db = client.db(process.env.MONGO_DB || "test");
 
 module.exports = {
 
