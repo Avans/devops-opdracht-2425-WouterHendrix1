@@ -19,7 +19,7 @@ jobs:
               node-version: 22
           - run: 
               cd week1
-              npm ci
+              npm install
           - run: 
               cd week1
               npm test
