@@ -26,6 +26,9 @@ jobs:
               cd week1
               npm install
 
+          - name: Start MongoDB
+            run: sudo systemctl start mongod
+
           - name: Run tests
             run: |
               cd week1
