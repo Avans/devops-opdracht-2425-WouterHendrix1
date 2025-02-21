@@ -20,6 +20,4 @@ jobs:
           - run: |
               cd week1
               npm install
-          - run: |
-              cd week1
               npm test
