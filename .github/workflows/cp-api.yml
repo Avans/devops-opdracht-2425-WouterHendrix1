@@ -17,9 +17,9 @@ jobs:
           - uses: actions/setup-node@v4
             with:
               node-version: 22
-          - run: 
+          - run: |
               cd week1
               npm install
-          - run: 
+          - run: |
               cd week1
               npm test
