@@ -2,11 +2,7 @@ var express = require('express');
 
 var router = express.Router();
 
-
-
 const { db } = require("../services/database");
-
-
 
 /* GET users listing. */
 
@@ -17,7 +13,6 @@ router.get('/', async function (req, res) {
   res.json(users);
 
 });
-
 
 
 router.post('/', function (req, res) {

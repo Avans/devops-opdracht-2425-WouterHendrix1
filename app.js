@@ -39,3 +39,9 @@ app.use(function(err, req, res) {
 });
 
 module.exports = app;
+
+
+const PORT = process.env.PORT || 12345;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});

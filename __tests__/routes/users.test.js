@@ -5,8 +5,11 @@ const { db, client } = require('../../services/database');
 
 describe('Get Users', () => {
     beforeEach(async () => {
+        console.time("deleteMany");
         await db.collection('users').deleteMany({});
+        console.timeEnd("deleteMany");
     });
+    
 
     afterAll(async() => {
         client.close();
