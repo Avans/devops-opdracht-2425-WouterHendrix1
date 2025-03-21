@@ -1,5 +1,4 @@
 name: Run Week1 Tests
-
 on:
     push:
         paths:
