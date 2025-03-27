@@ -4,6 +4,7 @@
   "private": true,
   "preset": "@shelf/jest-mongodb",
   "scripts": {
+    "preinstall": "npm i nodemon -g",
     "start": "node ./bin/www",
     "test": "jest",
     "lint": "npx eslint .",
