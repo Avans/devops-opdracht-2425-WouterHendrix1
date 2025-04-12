@@ -1,37 +1,36 @@
-version: "3.8"
-
 services:
   mongo:
     image: mongo:latest
-    container_name: my-mongo-container
+    container_name: my-mongo
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: secretpassword
+      MONGO_INITDB_ROOT_USERNAME: myuser
+      MONGO_INITDB_ROOT_PASSWORD: mypassword
     volumes:
-      - mongo-data:/data/db
+      - ./mongo-data:/data/db  # Zorg voor persistente data
     networks:
       - mynetwork
+    expose:
+      - 27017  # Alleen intern beschikbaar binnen Docker
 
   api:
     build:
       context: .
-      dockerfile: Dockerfile  # Use Dockerfile.dev for development
-    container_name: my-api-container
+      dockerfile: Dockerfile.dev  # Gebruik Dockerfile.dev voor development
+    container_name: my-api-container-dev
     restart: always
-    ports:
-      - "3000:3000"
     environment:
-      PORT: 3000
-      MONGO_URL: mongodb://admin:secretpassword@mongo:27017/
-    depends_on:
-      - mongo
+      MONGO_URI: "mongodb://myuser:mypassword@mongo:27017/mydatabase?authSource=admin"
+    ports:
+      - "3000:3000"  # API extern beschikbaar
+    volumes:
+      - .:/app  # Bind-mount voor live updates
     networks:
       - mynetwork
-
-volumes:
-  mongo-data:
+    depends_on:
+      - mongo
 
 networks:
   mynetwork:
+    name: mynetwork
     driver: bridge

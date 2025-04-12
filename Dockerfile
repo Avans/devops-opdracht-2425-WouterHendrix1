@@ -1,24 +1,15 @@
-# Gebruik een vaste versie van Node.js
-FROM node:22
+# Gebruik een Node.js image als basis
+FROM node:18
 
 # Stel de werkdirectory in
 WORKDIR /app
 
-# Kopieer package.json en package-lock.json
+# Kopieer en installeer alleen package.json en package-lock.json
 COPY package*.json ./
+RUN npm install --omit=dev  # Alleen productie-dependencies installeren
 
-# Installeer de dependencies (inclusief Nodemon)
-RUN npm install
-
-# Kopieer de rest van de applicatie
+# Kopieer de rest van de code
 COPY . .
 
-# Stel de omgevingsvariabelen in
-ENV PORT=12345
-ENV MONGO_URL=mongodb://my-mongo-container:27017
-
-# Open de poort binnen de container
-EXPOSE 12345
-
-# Gebruik Nodemon voor live reload tijdens development
-CMD ["npm", "run", "dev"]
+# Start de applicatie
+CMD ["node", "server.js"]
