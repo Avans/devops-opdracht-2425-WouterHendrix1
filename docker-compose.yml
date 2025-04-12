@@ -7,24 +7,24 @@ services:
       MONGO_INITDB_ROOT_USERNAME: myuser
       MONGO_INITDB_ROOT_PASSWORD: mypassword
     volumes:
-      - ./mongo-data:/data/db  # Zorg voor persistente data
+      - ./mongo-data:/data/db
     networks:
       - mynetwork
     expose:
-      - 27017  # Alleen intern beschikbaar binnen Docker
+      - 27017
 
   api:
     build:
       context: .
-      dockerfile: Dockerfile.dev  # Gebruik Dockerfile.dev voor development
+      dockerfile: Dockerfile.dev
     container_name: my-api-container-dev
     restart: always
     environment:
       MONGO_URI: "mongodb://myuser:mypassword@mongo:27017/mydatabase?authSource=admin"
     ports:
-      - "3000:3000"  # API extern beschikbaar
+      - "3000:3000"
     volumes:
-      - .:/app  # Bind-mount voor live updates
+      - .:/app
     networks:
       - mynetwork
     depends_on:
