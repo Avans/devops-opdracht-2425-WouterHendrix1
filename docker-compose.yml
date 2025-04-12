@@ -1,0 +1,36 @@
+services:
+  mongo:
+    image: mongo:latest
+    container_name: my-mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: myuser
+      MONGO_INITDB_ROOT_PASSWORD: mypassword
+    volumes:
+      - ./mongo-data:/data/db
+    networks:
+      - mynetwork
+    expose:
+      - 27017
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: my-api-container-dev
+    restart: always
+    environment:
+      MONGO_URI: "mongodb://myuser:mypassword@mongo:27017/mydatabase?authSource=admin"
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    networks:
+      - mynetwork
+    depends_on:
+      - mongo
+
+networks:
+  mynetwork:
+    name: mynetwork
+    driver: bridge
