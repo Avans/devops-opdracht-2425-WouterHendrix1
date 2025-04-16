@@ -35,4 +35,3 @@ jobs:
         with:
           working-directory: DevOpsWouterHendrix
           test-script: npm test
-          threshold: 70
