@@ -27,8 +27,11 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Install dependencies
-        run: npm install
+      - name: Clean install (no cache)
+        run: |
+            rm -rf node_modules package-lock.json
+            npm install
+        
 
       - name: Run ESLint
         run: sudo npx eslint .
