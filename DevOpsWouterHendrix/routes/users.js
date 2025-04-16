@@ -14,7 +14,7 @@ router.get('/', async function(req, res, next) {
 });
 
 /* POST new user */
-router.post('/', async function(req, res, next) {
+router.post('/', async function(req, res) {
   try {
     const result = await db.collection('users').insertOne(req.body);
     res.status(201).json({ id: result.insertedId });
