@@ -1,4 +1,4 @@
-name: CI - API
+name: Lint
 
 on:
   push:
@@ -10,8 +10,8 @@ on:
       - 'DevOpsWouterHendrix/**'
 
 jobs:
-  test:
-    name: Run tests for Node API
+  lint:
+    name: Run ESLint
     runs-on: ubuntu-latest
 
     defaults:
@@ -27,17 +27,10 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Clean install (no cache)
+      - name: Clean install (fix permissions)
         run: |
-            rm -rf node_modules package-lock.json
-            npm install
-        
+          rm -rf node_modules package-lock.json
+          npm install
 
       - name: Run ESLint
-        run: sudo npx eslint .
-
-      - name: Run tests with coverage
-        uses: ArtiomTr/jest-coverage-report-action@v2
-        with:
-          working-directory: DevOpsWouterHendrix
-          test-script: npm test
+        run: npm run lint
