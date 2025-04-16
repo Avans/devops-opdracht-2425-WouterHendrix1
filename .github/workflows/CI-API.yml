@@ -3,11 +3,11 @@ name: CI - API
 on:
   push:
     paths:
-      - '**'
+      - 'DevOpsWouterHendrix/**'
   pull_request:
     branches: [ main ]
     paths:
-      - '**'
+      - 'DevOpsWouterHendrix/**'
 
 jobs:
   test:
@@ -16,7 +16,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./
+        working-directory: DevOpsWouterHendrix
 
     steps:
       - name: Checkout repository
@@ -33,6 +33,6 @@ jobs:
       - name: Run tests with coverage
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
-          working-directory: ./
+          working-directory: DevOpsWouterHendrix
           test-script: npm test
           threshold: 70
