@@ -1,11 +1,15 @@
 const { MongoClient } = require("mongodb");
 
-const uri = "mongodb://localhost:27017";
-const client = new MongoClient(uri);
+// Gebruik omgevingsvariabelen
+const uri = process.env.MONGO_URL;
+const dbName = process.env.DB_NAME || "defaultdb";
 
-const db = client.db("mydb");
+console.log("Connecting to:", uri, dbName);
+
+const client = new MongoClient(uri);
+const db = client.db(dbName);
 
 module.exports = {
-    db: db,
-    client: client
+  db,
+  client
 };
