@@ -3,7 +3,6 @@ const app = require('../../app');
 const { db, client } = require('../../services/database');
 
 describe('Get Users', () => {
-  console.log('Connecting to MongoDB...');
   beforeEach(async () => {
     await db.collection('users').deleteMany({});
   });
