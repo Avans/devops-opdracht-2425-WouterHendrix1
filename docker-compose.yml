@@ -1,0 +1,36 @@
+services:
+  mongodb:
+    image: mongo
+    container_name: mongo-wouter
+    restart: always
+    command: ["mongod", "--quiet"]
+    ports:
+      - "27018:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - ./mongo-data:/data/db
+    networks:
+      - devnet
+
+  api:
+    build:
+      context: ./DevOpsWouterHendrix
+      dockerfile: Dockerfile
+    container_name: api-wouter
+    ports:
+      - "3000:${PORT}"
+    environment:
+      MONGO_URL: mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongo-wouter:27017
+      DB_NAME: ${DB_NAME}
+      PORT: ${PORT}
+    volumes:
+      - ./DevOpsWouterHendrix:/app
+    depends_on:
+      - mongodb
+    networks:
+      - devnet
+
+networks:
+  devnet:
