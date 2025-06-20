@@ -18,9 +18,8 @@ services:
     build:
       context: ./DevOpsWouterHendrix
       dockerfile: Dockerfile
-    container_name: api-wouter
     ports:
-      - "3000:${PORT}"
+      - "5000:${PORT}"
     environment:
       MONGO_URL: mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongo-wouter:27017
       DB_NAME: ${DB_NAME}
@@ -32,5 +31,26 @@ services:
     networks:
       - devnet
 
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml 
+    networks:
+     - devnet
+
+  grafana:
+    build: ./grafana
+    ports:
+      - 3000:3000
+    networks:
+      - devnet
+
 networks:
   devnet:
+
+volumes:
+  prometheus_data:
