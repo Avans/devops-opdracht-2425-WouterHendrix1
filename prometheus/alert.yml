@@ -1,0 +1,10 @@
+groups:
+  - name: Alerts
+    rules: 
+      - alert: ApiDown
+        expr: up{job="api"} == 0
+        for: 100s
+      - alert: ApiSlow
+        expr: http_request_duration_seconds_sum{job="api", path="/users/slow"} > 2
+        for: 20s
+        

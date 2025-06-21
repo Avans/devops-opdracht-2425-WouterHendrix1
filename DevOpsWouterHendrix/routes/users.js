@@ -13,6 +13,18 @@ router.get('/', async function(req, res, next) {
   }
 });
 
+router.get('/slow', async function(req, res, next) {
+  // Simulate a slow response
+  setTimeout(async () => {
+    try {
+      let users = await db.collection('users').find().toArray();
+      res.json(users);
+    } catch (err) {
+      next(err);
+    }
+  }, 5000); // 5 seconds delay
+});
+
 /* POST new user */
 router.post('/', async function(req, res) {
   try {
